@@ -1,56 +1,89 @@
-/**
- * Функции написанные здесь пригодятся на последующих уроках
- * С помощью этих функций мы будем добавлять элементы в список для проверки динамической загрузки
- * Поэтому в идеале чтобы функции возвращали случайные данные, но в то же время не абракадабру.
- * В целом сделайте так, как вам будет удобно.
- * */
+type Category = {
+  id: string;
+  name: string;
+  photo?: string;
+};
 
-/**
- * Нужно создать тип Category, он будет использоваться ниже.
- * Категория содержит
- * - id (строка)
- * - name (строка)
- * - photo (строка, необязательно)
- *
- * Продукт (Product) содержит
- * - id (строка)
- * - name (строка)
- * - photo (строка)
- * - desc (строка, необязательно)
- * - createdAt (строка)
- * - oldPrice (число, необязательно)
- * - price (число)
- * - category (Категория)
- *
- * Операция (Operation) может быть либо тратой (Cost), либо доходом (Profit)
- *
- * Трата (Cost) содержит
- * - id (строка)
- * - name (строка)
- * - desc (строка, необязательно)
- * - createdAt (строка)
- * - amount (число)
- * - category (Категория)
- * - type ('Cost')
- *
- * Доход (Profit) содержит
- * - id (строка)
- * - name (строка)
- * - desc (строка, необязательно)
- * - createdAt (строка)
- * - amount (число)
- * - category (Категория)
- * - type ('Profit')
- * */
+type Product = {
+  id: string;
+  name: string;
+  photo: string;
+  desc?: string;
+  createdAt: string;
+  oldPrice?: number;
+  price: number;
+  category: Category;
+};
 
-/**
- * Создает случайный продукт (Product).
- * Принимает дату создания (строка)
- * */
-// export const createRandomProduct = (createdAt: string) => {};
+type Cost = {
+  id: string;
+  name: string;
+  desc?: string;
+  createdAt: string;
+  amount: number;
+  category: Category;
+  type: 'Cost';
+};
 
-/**
- * Создает случайную операцию (Operation).
- * Принимает дату создания (строка)
- * */
-// export const createRandomOperation = (createdAt: string) => {};
+type Profit = {
+  id: string;
+  name: string;
+  desc?: string;
+  createdAt: string;
+  amount: number;
+  category: Category;
+  type: 'Profit';
+};
+
+type Operation = Cost | Profit;
+
+export const createRandomProduct = (createdAt: string): Product => {
+  return <Product>{
+    id: getRandomId(),
+    name: `Product ` + getRandomValueForName(),
+    photo: 'Some Photo',
+    desc: 'desc',
+    createdAt: createdAt,
+    oldPrice: getRandomAmountOrPrice(),
+    price: getRandomAmountOrPrice(),
+    category: getRandomCategory(),
+  };
+};
+
+export const createRandomOperation = (createdAt: string): Operation => {
+  const nameOfOperation = getRandomOperation();
+  return <Operation>{
+    id: getRandomId(),
+    name: nameOfOperation + getRandomValueForName(),
+    desc: 'desc',
+    createdAt: createdAt,
+    amount: getRandomAmountOrPrice(),
+    category: getRandomCategory(),
+    type: nameOfOperation,
+  };
+};
+
+function getRandomId(): string {
+  const id = Math.floor(Math.random() * 9999) + 999;
+  return id.toString();
+}
+
+function getRandomValueForName(): string {
+  const value = Math.floor(Math.random() * 50) + 1;
+  return value.toString();
+}
+
+function getRandomAmountOrPrice(): number {
+  return Math.floor(Math.random() * 99999) + 9999;
+}
+
+function getRandomCategory(): Category {
+  return <Category>{
+    id: getRandomId(),
+    name: 'Category ' + getRandomValueForName(),
+  };
+}
+
+function getRandomOperation(): string {
+  return Math.random() < 0.5 ? 'Cost' : 'Profit';
+}
