@@ -15,9 +15,7 @@ type ModalDialogProps = {
 /**
  * Primary UI component for user interaction
  */
-export const ModalDialog = (props: ModalDialogProps) => {
-  const { visible, children } = props;
-
+export const ModalDialog = ({ visible, children }: ModalDialogProps) => {
   if (!visible) return null;
 
   return (
