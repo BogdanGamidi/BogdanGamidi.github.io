@@ -1,0 +1,9 @@
+.layout {
+    overflow: visible;
+    position: relative;
+    min-height: 100vh;
+}
+
+.layout-content {
+    padding-top: 70px;
+}
