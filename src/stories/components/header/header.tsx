@@ -4,11 +4,9 @@ import './header.css';
 
 export const Header = () => {
   return (
-    <header>
-      <div className="header">
-        <Logo />
-        <h1>Main</h1>
-      </div>
-    </header>
+    <div className="header">
+      <Logo />
+      <h1>Main</h1>
+    </div>
   );
 };
